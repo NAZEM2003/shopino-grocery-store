@@ -1,0 +1,14 @@
+.nav_list_container{
+    width: max-content;
+    margin-top: 1.5rem;
+
+}
+.nav_list_container > li{
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.nav_list_container a{
+    display: flex;
+    align-items: center;
+}
