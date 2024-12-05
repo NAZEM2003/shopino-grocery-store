@@ -1,6 +1,6 @@
 import React from 'react';
 import CommentForm from './CommentForm';
-import CommetnBox from '@/modules/comment/CommetnBox';
+import CommetnBox from '@/components/modules/comment/CommentBox';
 import { getProductComments } from '@/utils/actions';
 
 const Comments = async ({ product }) => {

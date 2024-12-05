@@ -3,6 +3,8 @@ import User from "@/models/User";
 import Product from "@/models/Product";
 import Wishlist from "@/models/Wishlist";
 import connectToDB from "@/config/db";
+import { authUser } from "@/utils/actions";
+
 
 export const POST = async (req) => {
     try {
@@ -47,10 +49,27 @@ export const DELETE = async (req) => {
                 status: 400
             });
         }
-        await Wishlist.findOneAndDelete({user,product});
-        return Response.json({message:"the Product has been successfully removed from wishlist"});
-
+        await Wishlist.findOneAndDelete({ user, product });
+        return Response.json({ message: "the Product has been successfully removed from wishlist" });
     } catch (error) {
-
+        return Response.json({ message: error.message }, {
+            status: 500
+        });
+    }
+}
+export const GET = async () => {
+    try {
+        const user = await authUser();
+        if(!user){
+            return Response.json({message:"user is not authenticated"},{
+                status:401
+            })
+        }
+        const wishlist = await Wishlist.find({user:user._id});
+        return Response.json(wishlist);
+    } catch (error) {
+        return Response.json({ message: error.message }, {
+            status: 500
+        });
     }
 }

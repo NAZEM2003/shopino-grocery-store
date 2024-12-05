@@ -17,7 +17,7 @@ const Orders = () => {
             <div className='mt-10 '>
                 <OrderBox img={img} name="Carrot" date="12/06/2024 08:30" isCompleted={false} price={3.35} />
                 <OrderBox img={img2} name="Carrot" date="12/06/2024 08:30" isCompleted={true} price={3.35} />
-                <OrderBox img={img3} name="Carrot" date="12/06/2024 08:30" isCompleted={true} price={3.35} />
+                <OrderBox img={img3} name="fresh Orange" date="12/06/2024 08:30" isCompleted={true} price={3.35} />
 
                 {/* <h2 className='text-center text-2xl text-zinc-800 font font-semibold my-20'>There is no Order!</h2> */}
             </div>

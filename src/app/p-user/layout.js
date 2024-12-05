@@ -19,7 +19,7 @@ const UserPanelLayout = async ({ children }) => {
         redirect(`/login-register?method=${loginRegisterMethods.signin}`);
     }
     return (
-        <div className='overflow-hidden min-h-screen'>
+        <div className='overflow-hidden min-h-screen '>
             <Topbar user={user} />
             <div className='flex lg:justify-end'>
                 <div className='hidden lg:inline-block w-80 fixed top-20 left-0'>

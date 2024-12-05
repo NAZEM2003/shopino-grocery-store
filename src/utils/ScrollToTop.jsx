@@ -21,7 +21,7 @@ const ScrollToTop = () => {
     }
 
     return (
-        <button type='button' title='scroll to top' onClick={scrolllToTop} className={`${isVisible ? "flex":"hidden"} justify-center items-center z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full fixed  bottom-5 sm:bottom-12 left-5 sm:left-16 text-2xl bg-slate-200 text-zinc-800 shadow-md shadow-zinc-700 transition-all`}>
+        <button type='button' title='scroll to top' onClick={scrolllToTop} className={`${isVisible ? "flex":"hidden"} justify-center items-center z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full fixed  bottom-5 right-5 sm:right-10 text-2xl bg-slate-200 text-zinc-800 shadow-md shadow-zinc-700 transition-all`}>
             <FaChevronUp />
         </button>
     );

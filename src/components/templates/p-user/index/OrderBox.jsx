@@ -7,10 +7,10 @@ const OrderBox = ({ name, img, price, isCompleted, date }) => {
         <Link href={`/p-user/orders/id`} className='w-full rounded-md text-slate-200 bg-zinc-700 p-3 my-5 sm:my-10 inline-block sm:flex items-center justify-between max-w-2xl'>
             <div className=''>
                 <div className='flex items-center '>
-                    <div className='w-14 h-14 relative rounded-xl bg-slate-200 overflow-hidden'>
+                    <div className='w-14 h-14 relative rounded-xl bg-slate-200 overflow-hidden z-0'>
                         <Image src={img} fill  />
                     </div>
-                    <h2 className='text-xl'>{name}</h2>
+                    <h2 className='text-2xl ml-3 '>{name}</h2>
                 </div>
                 <p className={`my-4 sm:mb-0 sm:mt-5 ${isCompleted ? "text-green-500" : "text-red-500"}`}>{
                     isCompleted ? "Completed" : "Not Completed"
