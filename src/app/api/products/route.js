@@ -3,6 +3,7 @@ import { productSchema } from "@/utils/zod";
 import Product from "@/models/Product";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { authAdmin } from "@/utils/actions";
 
 export const POST = async (req) => {
     try {
@@ -16,6 +17,12 @@ export const POST = async (req) => {
         const description = formData.get("description");
         const category = formData.get("category");
 
+        const admin = authAdmin();
+        if (!admin) {
+            return Response.json({ message: "access denied" }, {
+                status: 403
+            });
+        }
         if (!img) {
             return Response.json({ message: "product image not selected" }, {
                 status: 422
@@ -65,9 +72,9 @@ export const POST = async (req) => {
 }
 
 export const GET = async () => {
-    try { 
+    try {
         connectToDB();
-        const products = await Product.find({},"-__v").populate("comments category");
+        const products = await Product.find({}, "-__v").populate("comments category");
         return Response.json(products);
     } catch (error) {
         return Response.json({ message: error.message }, {

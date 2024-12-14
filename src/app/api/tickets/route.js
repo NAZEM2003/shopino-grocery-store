@@ -61,7 +61,7 @@ export async function GET (){
                 status:401
             });
         }
-        const tickets = await Ticket.find({user:user._id}).populate("department").sort({_id:-1});
+        const tickets = await Ticket.find({user:user._id , isAnswer:false}).populate("department").sort({_id:-1});
         return Response.json(tickets);
     }catch(error){
         return Response.json({message:error.message},{

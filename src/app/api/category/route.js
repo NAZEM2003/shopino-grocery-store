@@ -1,5 +1,7 @@
 import connectToDB from "@/config/db";
 import Category from "@/models/Category";
+import { authAdmin } from "@/utils/actions";
+import { role } from "@/utils/constants";
 import { categoryTitleSchema } from "@/utils/zod";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -11,6 +13,12 @@ export const POST = async (req) => {
         const title = formData.get("title");
         const img = formData.get("img");
 
+        const admin = await authAdmin();
+        if (!admin) {
+            return Response.json({ message: "access denied" }, {
+                status: 403
+            });
+        }
         //data validation
         const isTitleValid = categoryTitleSchema.safeParse(title);
         if (!isTitleValid.success) {
@@ -33,8 +41,8 @@ export const POST = async (req) => {
             title,
             img: `http://localhost:3000/uploads/categories/${imgName}`
         })
-        return Response.json({message:"category added successfully"},{
-            status:201
+        return Response.json({ message: "category added successfully" }, {
+            status: 201
         });
 
 

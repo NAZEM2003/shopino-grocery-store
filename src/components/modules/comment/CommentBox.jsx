@@ -4,7 +4,7 @@ import { FaRegStar, FaStar } from 'react-icons/fa';
 
 const CommetnBox = ({ comment }) => {
     return (
-        <div className='border border-zinc-400 rounded-lg p-3 my-6 w-10/12 min-w-64 max-w-md lg:max-w-lg'>
+        <div className='border border-zinc-400 rounded-lg p-3 my-6 w-full min-w-64 max-w-md lg:max-w-lg'>
             <div className='p-2 flex item'>
                 <div className='w-16 h-16 relative'>
                     <Image className='rounded-full' fill src={comment.userID.img} alt='profile' />

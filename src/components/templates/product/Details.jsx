@@ -37,7 +37,7 @@ const Details = ({product}) => {
                     }
                 </p>
 
-                <AddToCart />
+                <AddToCart id={product._id} name={product.name} price={product.price} img={product.img}/>
                 <AddToWishlist productID={product._id}/>
                 <div className='border-y border-zinc-400'>
                     <p className='my-4 text-zinc-800'><span className='font-semibold'>Category</span> : {product.category.title}</p>

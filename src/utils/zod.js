@@ -47,6 +47,18 @@ export const changePasswordSchema = z.object({
 export const departmentSchema = z.string().trim().min(3, "department name must be at least 3 characters").max(35, "department name must be 35 characters maximum");
 
 export const ticketSchema = z.object({
-    title:z.string().trim().min(3, "ticket title must be at least 3 characters").max(400, "ticket title must be 400 characters maximum"),
-    body:z.string().trim().min(3, "ticket message must be at least 3 characters")
-})
+    title: z.string().trim().min(3, "ticket title must be at least 3 characters").max(400, "ticket title must be 400 characters maximum"),
+    body: z.string().trim().min(3, "ticket message must be at least 3 characters")
+});
+
+export const emailSchema = z.string().trim().email("Please enter a valid email").min(3, "email must be at least 3 characters");
+
+export const ticketAnswerSchema = z.string().trim().min(2, "your answer must be at least 2 characters");
+
+export const discountSchema = z.object({
+    code:z.string().trim().min(3,"discount code must be at least 3 characters").max(20,"discount code must be 20 characters maximum"),
+    percent:z.number().gte(1,"the discount percentage should be more than 1").lte(100,"maximum discount percentage should be 100"),
+    maxUse:z.number().gte(1,"the discount max use should be more than 1"),
+});
+
+export const discountCodeSchema = z.string().trim().min(3,"discount code must be at least 3 characters").max(20,"discount code must be 20 characters maximum")

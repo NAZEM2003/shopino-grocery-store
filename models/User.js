@@ -1,8 +1,8 @@
 const { default: mongoose } = require("mongoose");
 import { role } from "@/utils/constants";
 import "./Comment";
-// import "./Wish";
-// import "./Ticket";
+import "./Wishlist";
+import "./Ticket";
 // import "./Order";
 
 const schema = mongoose.Schema({

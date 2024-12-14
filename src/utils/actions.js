@@ -7,7 +7,9 @@ import Comment from "@/models/Comment";
 import Category from "@/models/Category";
 import Wishlist from "@/models/Wishlist";
 import Ticket from "@/models/Ticket";
+import Discount from "@/models/Discount";
 import connectToDB from "@/config/db";
+import { role } from './constants';
 
 export const authUser = async () => {
     let user = null;
@@ -23,11 +25,39 @@ export const authUser = async () => {
     }
     return user;
 }
+export const authAdmin = async () => {
+    let admin = null;
+    const cookieStore = cookies();
+    const token = cookieStore.get("token");
+    if (token) {
+        const tokenPayload = verifyAccessToken(token.value)
+        if (tokenPayload) {
+            connectToDB();
+            admin = await User.findOne({ email: tokenPayload.email , role:role.admin}).lean();
+            return admin
+        }else{
+            return null
+        }
+    }else{
+        return null
+    }
+}
+
 
 export const getProduct = async (productID) => {
     connectToDB();
     const product = await Product.findOne({ _id: productID }, "-__v").populate("category", "-__v").lean();
     return product;
+}
+export const getMoreProducts = async (category) => {
+    connectToDB();
+    const MoreProducts = await Product.find({ category }, "-__v");
+    return JSON.parse(JSON.stringify(MoreProducts));
+}
+export const getLatestProducts = async () => {
+    connectToDB();
+    const products = await Product.find({}, '-__v').sort({ _id: -1 }).limit(8).lean();
+    return JSON.parse(JSON.stringify(products));
 }
 
 export const getProductComments = async (productID) => {
@@ -40,22 +70,16 @@ export const getUserComments = async (userID) => {
     const comments = await Comment.find({ userID }, "-__v").populate("productID", 'name')
     return comments;
 }
-
-export const getMoreProducts = async (category) => {
+export const getAllComments = async () => {
     connectToDB();
-    const MoreProducts = await Product.find({ category }, "-__v");
-    return JSON.parse(JSON.stringify(MoreProducts));
+    const comments = Comment.find(({})).populate("userID productID").sort({ _id: -1 }).lean();
+    return comments;
 }
 
 export const getCategories = async () => {
     connectToDB();
     const categories = await Category.find({}, "-__V").limit(6);
     return categories;
-}
-export const getLatestProducts = async () => {
-    connectToDB();
-    const products = await Product.find({}, '-__v').sort({ _id: -1 }).limit(8).lean();
-    return JSON.parse(JSON.stringify(products));
 }
 
 export const getUserWish = async (userID, productID) => {
@@ -81,11 +105,28 @@ export const getAnswerTicket = async (questionTicketID) => {
 };
 export const getUserTickets = async (userID) => {
     connectToDB();
-    const tickets = Ticket.find({user:userID});
+    const tickets = Ticket.find({ user: userID });
     return tickets
 }
 export const getRecentTickets = async (userID) => {
     connectToDB();
-    const tickets = Ticket.find({user:userID}).populate("department").sort({_id:-1}).limit(4);
+    const tickets = Ticket.find({ user: userID, isAnswer: false }).populate("department").sort({ _id: -1 }).limit(4);
     return tickets
+}
+export const getAllTickets = async () => {
+    connectToDB();
+    const tickets = await Ticket.find({ isAnswer: false }).populate("user").populate("department").sort({ _id: -1 }).lean();
+    return tickets;
+}
+
+export const getAllUsers = async () => {
+    connectToDB();
+    const users = await User.find({}).sort({ _id: -1 }).lean();
+    return users;
+}
+
+export const getDiscounts = async () => {
+    connectToDB();
+    const discounts = await Discount.find({}).populate("user", "name").sort({ _id: -1 }).lean();
+    return discounts;
 }

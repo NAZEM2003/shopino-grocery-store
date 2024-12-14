@@ -46,7 +46,7 @@ const Signin = () => {
                 confirmButtonText: "Ok",
                 confirmButtonColor: "#499"
             }).then(()=>{
-                router.back();
+                router.replace("/");
             })
         } else{
             Swal.fire({

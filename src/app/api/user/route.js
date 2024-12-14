@@ -1,11 +1,12 @@
 import connectToDB from "@/config/db";
 import { updateUserSchema } from "@/utils/zod";
 import User from "@/models/User";
-import { authUser } from "@/utils/actions";
+import { authAdmin, authUser } from "@/utils/actions";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { cookies } from "next/headers";
 import { generateAccessToken } from "@/utils/auth";
+import mongoose from "mongoose";
 
 //update user data
 export async function PATCH(req) {
@@ -59,6 +60,39 @@ export async function PATCH(req) {
         });
         return Response.json({ message: "the update was successful" });
     } catch (error) {
+        return Response.json({ message: error.message }, {
+            status: 500
+        });
+    }
+}
+
+export async function DELETE(req) {
+    try {
+        connectToDB();
+        const { userID } = await req.json();
+        const admin = authAdmin();
+        if (!admin) {
+            return Response.json({ message: "access denied" }, {
+                status: 403
+            });
+        }
+        const isUserIDValid = mongoose.Types.ObjectId.isValid(userID);
+        if (!isUserIDValid) {
+            return Response.json({ message: "incorrect userID" }, {
+                status: 400
+            });
+        };
+        const user = await User.findOne({ _id: userID }).lean();
+        if (!user) {
+            return Response.json({ message: "user not found" }, {
+                status: 404
+            });
+        }
+        await User.findOneAndDelete({ _id: userID });
+        return Response.json({ message: "user successfully deleted" });
+
+    } catch (error) {
+        console.log(error.message);
         return Response.json({ message: error.message }, {
             status: 500
         });

@@ -14,11 +14,11 @@ const Layout = async ({children}) => {
 
 
     return (
-        <div className='overflow-hidden min-h-screen' >
-            <Topbar user={user} />
+        <div className='overflow-hidden min-h-screen relative' >
+            <Topbar user={JSON.parse(JSON.stringify(user))} />
             <div className='flex lg:justify-end'>
                 <div className='hidden lg:inline-block w-80 fixed top-20 left-0'>
-                    <Sidebar user={user} />
+                    <Sidebar user={JSON.parse(JSON.stringify(user))} />
                 </div>
                 <div className={`${styles.main_content_container}`}>
                     {children}

@@ -9,8 +9,10 @@ import { AiFillProduct } from "react-icons/ai";
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoMdNotifications } from "react-icons/io";
+import LogoutBtn from '../buttons/LogoutBtn';
 
 const Sidebar = ({ isShown, user }) => {
+
     return (
         <nav className={`${styles.sidebar_container} ${isShown ? "right-3" : "-right-96"} shadow shadow-zinc-500 lg:h-screen bg-slate-200 `}>
 
@@ -63,7 +65,7 @@ const Sidebar = ({ isShown, user }) => {
                     <Link className='hover:text-custom-light-blue' href="/p-admin/discounts">Discounts <CiDiscount1 className='ml-2 text-orange-600' /></Link>
                 </li>
             </ul>
-            <button className='flex items-center p-2 lg:ml-4 my-5 border text-red-500 font-semibold border-red-500 transition-all hover:bg-red-500 hover:text-slate-200 rounded-md'>Log out <IoLogOutOutline className='text-xl ml-2' /></button>
+            <LogoutBtn/>
         </nav>
     );
 }

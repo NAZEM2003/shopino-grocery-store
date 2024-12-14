@@ -1,11 +1,12 @@
 "use client"
-import { loginRegisterMethods } from '@/utils/constants';
+import LogoutBtn from '@/components/modules/buttons/LogoutBtn';
+import { loginRegisterMethods, role } from '@/utils/constants';
 import Link from 'next/link';
 import React from 'react';
 import { FaAngleDown, FaSignInAlt } from 'react-icons/fa';
-import { FcAbout, FcHome, FcRules, FcShop, FcViewDetails, FcVoicePresentation, FcWikipedia } from 'react-icons/fc';
+import { FcAbout, FcAnswers, FcBusinessman, FcComments, FcDocument, FcHome, FcLike, FcPaid, FcRules, FcShop, FcViewDetails, FcVoicePresentation, FcWikipedia } from 'react-icons/fc';
 
-const Sidebar = ({ isShown, isLogin }) => {
+const Sidebar = ({ isShown, isLogin, userRole }) => {
     return (
         <nav className={`absolute z-20 w-64 h-max bg-slate-200 ${isShown ? "right-4" : "-right-72"} top-20 transition-all duration-500 rounded-lg  shadow shadow-zinc-500`}>
 
@@ -34,20 +35,25 @@ const Sidebar = ({ isShown, isLogin }) => {
                             <Link className='hover:text-custom-light-blue flex items-center' href="/p-user">
                                 Account <FaAngleDown className='ml-2 hidden sm:inline-block' />  <FcViewDetails className="ml-1" />
                             </Link>
-                            <ul className='sm:group-hover:inline-block hidden absolute -top-5 bg-slate-200 p-4 w-max [&>*]:p-2 right-32 z-10 rounded-md shadow shadow-zinc-500'>
-                                <li><Link className='hover:text-custom-light-blue' href="/p-user/orders">Orders</Link></li>
-                                <li><Link className='hover:text-custom-light-blue' href="/p-user/tickets">Ticket</Link></li>
-                                <li><Link className='hover:text-custom-light-blue' href="/p-user/comments">comments</Link></li>
-                                <li><Link className='hover:text-custom-light-blue' href="/p-user/wishlist">Wishlist</Link></li>
-                                <li><Link className='hover:text-custom-light-blue' href="/p-user/account-details">Account Details</Link></li>
+                            <ul className='sm:group-hover:inline-block hidden absolute -top-16 bg-slate-200 p-4 w-max [&>*]:p-2 right-32 z-10 rounded-md shadow shadow-zinc-500'>
+                                <li><Link className='hover:text-custom-light-blue flex items-center' href="/p-user/orders">Orders <FcPaid className='ml-2 text-lg' /></Link></li>
+                                <li><Link className='hover:text-custom-light-blue flex items-center' href="/p-user/tickets">Ticket <FcAnswers className='ml-2 text-lg' /></Link></li>
+                                <li><Link className='hover:text-custom-light-blue flex items-center' href="/p-user/comments">comments <FcComments className='ml-2 text-lg' /></Link></li>
+                                <li><Link className='hover:text-custom-light-blue flex items-center' href="/p-user/wishlist">Wishlist <FcLike className='ml-2 text-lg' /></Link></li>
+                                <li><Link className='hover:text-custom-light-blue flex items-center' href="/p-user/account-details">Account Details <FcDocument className='ml-2 text-lg' /></Link></li>
+                                <li>
+                                    <LogoutBtn/>
+                                </li>
                             </ul>
                         </> : <Link href={`/login-register/?method=${loginRegisterMethods.signin}`} className='hover:text-custom-light-blue flex items-center' >
                             Sign in <FaSignInAlt className='ml-2 text-cyan-500' />
                         </Link>
                     }
 
-
                 </li>
+                {
+                    userRole === role.admin ? <li><Link className='hover:text-custom-light-blue flex items-center' href="/p-admin">Admin Panel <FcBusinessman className='ml-2 text-lg' /></Link></li> : ""
+                }
             </ul>
 
         </nav>

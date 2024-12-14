@@ -1,6 +1,8 @@
 import InfoBox from '@/modules/box/InfoBox';
 import React from 'react';
 import styles from "@/styles/p-admin/index/style.module.css";
+import SaleChart from '@/components/templates/p-admin/index/SaleChart';
+import GrowthRate from '@/components/templates/p-admin/index/GrowthRate';
 const AdminPanel = () => {
     return (
         <main className='px-3'>
@@ -10,8 +12,9 @@ const AdminPanel = () => {
                 <InfoBox title="Total Orders" value={25} />
                 <InfoBox title="Total Users" value={45} />
             </section>
-            <section>
-
+            <section className='flex flex-col items-center '>
+                <SaleChart/>
+                <GrowthRate/>
             </section>
         </main>
     );

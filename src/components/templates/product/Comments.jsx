@@ -10,7 +10,7 @@ const Comments = async ({ product }) => {
             <h2 className='sm:text-2xl text-xl text-zinc-800 font-semibold p-2'>Comments</h2>
             <div className='mt-16 flex flex-col justify-center items-center lg:flex-row lg:items-start lg:justify-around lg:p-5'>
                 <CommentForm productID={JSON.parse(JSON.stringify(product._id))} />
-                <div className='mt-16 lg:mt-0 p-2 lg:p-0 flex flex-col items-center justify-center'>
+                <div className='mt-16 lg:mt-0 p-2 lg:p-0 flex flex-col items-center justify-center w-full'>
                     <h2 className='text-lg font-semibold text-zinc-800'>{comments.length} comments for {product.name}</h2>
 
                     {
