@@ -32,7 +32,6 @@ This project is an online grocery sales website that includes features such as: 
     Password hashing : bcryptjs
     
 4- project Images
-
     ![Screenshot (57)](https://github.com/user-attachments/assets/6cab4b60-4434-4be4-9805-f6551f4d6d09)
     ![Screenshot (58)](https://github.com/user-attachments/assets/7f21d334-7c8f-476a-8c40-43f9dec01fbb)
     ![Screenshot (56)](https://github.com/user-attachments/assets/584fd8df-c8d8-48fd-8520-f8b4354384f4)
