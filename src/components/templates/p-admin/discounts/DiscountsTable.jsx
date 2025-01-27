@@ -3,10 +3,15 @@ import React, { useEffect, useState } from 'react';
 import AddDiscountForm from './AddDiscountForm';
 import { getDiscounts } from '@/utils/actions';
 import Swal from 'sweetalert2';
+import { loginRegisterMethods } from '@/utils/constants';
+import { useRouter } from 'next/navigation';
 
 
 const DiscountsTable = () => {
     const [discounts, setDiscounts] = useState([]);
+
+    const router = useRouter();
+
     const fetchDiscounts = async () => {
         const allDiscounts = await getDiscounts();
         setDiscounts(allDiscounts);
@@ -28,13 +33,11 @@ const DiscountsTable = () => {
             if (result.isConfirmed) {
                 const res = await fetch("/api/discount", {
                     method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ discountID })
                 });
-                console.log(res);
-
                 if (res.ok) {
                     Swal.fire({
                         title: "Done",
@@ -49,6 +52,14 @@ const DiscountsTable = () => {
                         text: "Somthing went wrong, Please try again later",
                         icon: "error"
                     });
+                    return
+                } else if (res.status === 403) {
+                    Swal.fire({
+                        title: "Operation Failed",
+                        text: "Your Token has expired , Please log in again",
+                        icon: "error"
+                    });
+                    router.replace(`/login-register?method=${loginRegisterMethods.signin}`);
                     return
                 } else {
                     const resData = await res.json();
@@ -83,7 +94,7 @@ const DiscountsTable = () => {
                         </thead>
                         <tbody className='border border-zinc-500'>
                             {
-                                discounts.map((discount, index) => <tr key={discount._id} className={`border border-zinc-500 text-lg ${discount.uses === discount.maxUse ? "bg-red-400 text-slate-200" :""}`}>
+                                discounts.map((discount, index) => <tr key={discount._id} className={`border border-zinc-500 text-lg ${discount.uses === discount.maxUse ? "bg-red-400 text-slate-200" : ""}`}>
                                     <td className='border border-zinc-500 p-2 text-center'>
                                         {index + 1}
                                     </td>

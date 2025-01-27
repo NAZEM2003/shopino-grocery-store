@@ -5,28 +5,25 @@ import Total from './Total';
 
 const CartTable = () => {
     const [cart, setCart] = useState([]);
-    useEffect(() => {
+    const getCartItems = () => {
         const localCart = JSON.parse(localStorage.getItem("cart")) || [];
         setCart(localCart);
+    }
+    useEffect(() => {
+        getCartItems();
     }, []);
 
-    const calcTotalPrice = () => {
-        let totalPrice = 0
-        if(cart.length){
-            totalPrice = cart.reduce((prev , current)=> prev + (current.price * current.count) , 0);
-        }
-        return totalPrice;
-    }
-
     return (
-        <div className='lg:flex justify-around xl:justify-between lg:px-5'>
-            <section className='mt-20'>
+        <div className='lg:flex justify-between xl:justify-between lg:px-5'>
+            <section className='mt-20 lg:min-w-[500px] lg:w-6/12'>
                 {
-                    cart.map(item => <CartItemBox key={item.id} {...item} />)
+                    cart.length ?
+                    cart.map(item => <CartItemBox key={item.id} getCartItems={getCartItems} {...item} />)
+                    : <h1 className='text-center my-36 text-xl sm:text-3xl text-zinc-800 font-semibold'>There are no Products in Your Cart.</h1>
                 }
             </section>
-            <section>
-                <Total cart={cart}/>
+            <section className='lg:w-[400px]'>
+                <Total getCartItems={getCartItems} cart={cart} />
             </section>
         </div>
     );

@@ -13,7 +13,7 @@ export const verifyPassword = async (password , hashedPassword)=>{
 
 export const generateAccessToken = (data)=>{
     const token = sign({...data},process.env.AccessTokenSecretKey,{
-        expiresIn:"24h"
+        expiresIn:"30d"
     });
     return token;
 }
@@ -24,14 +24,13 @@ export const verifyAccessToken = (token)=>{
         return tokenPayload
     }
     catch(error){
-        console.log("verify access token Error ->" , error);
         return false
     }
 }
 
 export const generateRefreshToken = (data)=>{
     const token = sign({...data},process.env.refreshTokenSecretKey,{
-        expiresIn:"15d"
+        expiresIn:"60d"
     });
     return token;
 }

@@ -10,7 +10,6 @@ const Product = async ({ params }) => {
     const productID = params.id;
     const product = await getProduct(productID);
 
-
     return (
         <div>
             <Navbar />

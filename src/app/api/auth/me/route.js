@@ -7,7 +7,8 @@ export async function GET() {
     try {
         connectToDB();
         const cookieStore = cookies();
-        const token = cookieStore.get("token");
+        const token = cookieStore.get("token"); 
+               
         if (!token) {
             return Response.json({ message: "there is no token" }, {
                 status: 401

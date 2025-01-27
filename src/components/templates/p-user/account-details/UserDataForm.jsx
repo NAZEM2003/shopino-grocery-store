@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 
-const UserDataForm = () => {
+const UserDataForm = ({user}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [imageFile, setImageFile] = useState(null);
@@ -13,12 +13,11 @@ const UserDataForm = () => {
     const [imagePreview, setImagePreview] = useState(null);
 
     const fetchUser = async () => {
-        const res = await fetch("/api/auth/me");
-        const userData = await res.json();
-        setName(userData.name);
-        setEmail(userData.email);
-        setUserImg(userData.img)
-    }
+        setName(user?.name);
+        setEmail(user?.email);
+        setUserImg(user?.img);
+    };
+
     useEffect(() => {
         fetchUser();
     }, []);
@@ -80,7 +79,7 @@ const UserDataForm = () => {
                 confirmButtonColor: "#a88"
             });
             return
-        }else{
+        } else {
             Swal.fire({
                 title: "Operation Failed",
                 text: "Somthing went wrong.Please try again Later",
@@ -94,9 +93,9 @@ const UserDataForm = () => {
     return (
         <form className='w-full max-w-sm flex flex-col items-center border border-zinc-400 rounded-lg p-3 my-10 md:mr-4 md:mt-7 shadow-xl shadow-zinc-400' action={saveChanges} >
             <div className='relative w-24 h-24 rounded-full overflow-hidden'>
-                <Image src={imagePreview || userImg || "/uploads/users/defaultProfile.png"} fill alt='Profile image' />
+                <Image src={imagePreview || decodeURIComponent(userImg) || "/uploads/users/defaultProfile.png"} fill alt='Profile image' />
             </div>
-            <input onChange={fileChangeHandler} multiple={false} ref={fileInputRef} type="file" className='hidden' />
+            <input accept='image/*' onChange={fileChangeHandler} multiple={false} ref={fileInputRef} type="file" className='hidden' />
 
             <button className='p-2 mt-5 border border-custom-dark-blue outline-none rounded-md w-max font-semibold text-lg text-custom-dark-blue bg-slate-200 transition-all duration-200 hover:bg-custom-dark-blue hover:text-slate-200' onClick={() => {
                 fileInputRef.current?.click()

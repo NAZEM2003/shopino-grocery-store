@@ -7,12 +7,13 @@ export async function POST(req) {
     try {
         connectToDB();
         const { title, body, department, ticketID } = await req.json();
-        const admin = authAdmin();
+        const admin = await authAdmin();
         if (!admin) {
             return Response.json({ message: "access denied" }, {
                 status: 403
             });
         }
+        
         const isDataValid = ticketAnswerSchema.safeParse(body);
         if (!isDataValid.success) {
             return Response.json({ message: isDataValid.error.issues[0].message }, {
@@ -33,8 +34,6 @@ export async function POST(req) {
         return Response.json({ message: "ticket answer sent successfully" }, { status: 201 });
 
     } catch (error) {
-        console.log(error.message);
-
         return Response.json({ message: error.message }, {
             status: 500
         })

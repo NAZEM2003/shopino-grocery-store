@@ -33,8 +33,8 @@ const ChangeRoleModal = ({ userID, isModalShown, setIsModalShown, fetchUsers }) 
         const data = { userID, newRole };
         const res = await fetch("/api/user/role", {
             method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
+            headers:{
+                "Content-Type":"application/json"
             },
             body: JSON.stringify(data)
         });
@@ -89,6 +89,8 @@ const ChangeRoleModal = ({ userID, isModalShown, setIsModalShown, fetchUsers }) 
 
                 <SubmitBtn text="Save" />
             </form>
+
+            
             <div onClick={() => setIsModalShown(false)} className='absolute w-full h-full'></div>
 
         </div>

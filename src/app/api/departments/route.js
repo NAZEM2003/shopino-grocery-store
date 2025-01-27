@@ -2,6 +2,7 @@ import connectToDB from "@/config/db";
 import { departmentSchema } from "@/utils/zod";
 import Department from "@/models/Department";
 import { authAdmin } from "@/utils/actions";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req) {
     try {
@@ -22,7 +23,8 @@ export async function POST(req) {
         }
         await Department.create({
             title
-        })
+        });
+        revalidateTag("departmentsFetch");
         return Response.json({ message: "Department added successfully" });
 
     } catch (error) {

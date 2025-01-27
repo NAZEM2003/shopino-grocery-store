@@ -44,7 +44,10 @@ const AboutUs = () => {
                 <section className='flex flex-col md:flex-row items-center justify-between my-20 md:my-16'>
                     <div className='w-ful md:w-6/12 h-full flex flex-col items-center justify-center sm:inline-block'>
                         <h2 className='text-4xl font-semibold mb-10 text-zinc-800'>Our Story</h2>
-                        <p className='text-justify leading-8'>Shopino was originally a Fruit shop , but in 2017 , Shopino's founders decided to expend this small store and add the posibility of online ordering to it,so that Customers can easily place their order by entering Shopino's website and receive it as quickly as posible.but in 2020 , a fundamental change was made in Shopino and the posibility of ordering food was also added to it. so from 2020 onwards Customers can Buy ready meals and Groceries from Shopino.
+                        <p className='text-justify leading-8'>
+                            Shopino started its business in 2017 as an online grocery store. Abolfazl Jan Mohammadloo is the founder of Shopino. <br />
+                            Shopino has proven itself as a reputable and well-known store by focusing on user convenience, fast delivery, and quality products.<be />
+                            It should be noted that Shopino was initially a fruit store and its initial idea came from this fruit store.<br/> There is an articles section on the shopping site. You can read published articles and increase your general knowledge level and have fun.
                         </p>
                     </div>
 

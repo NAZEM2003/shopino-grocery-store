@@ -13,7 +13,7 @@ export async function POST(req) {
         if (!user) {
             return Response.json({ message: "the user is not authenticated" }, {
                 status: 401
-            })
+            });
         }
         const reqBody = await req.json();
         const { title, body, department } = reqBody;
@@ -22,13 +22,13 @@ export async function POST(req) {
         if (!isDepartmentValid) {
             return Response.json({ message: "department is not correct" }, {
                 status: 400
-            })
+            });
         } else {
             const isDepartmentExists = await Department.findOne({ _id: department });
             if (!isDepartmentExists) {
                 return Response.json({ message: "department not found" }, {
                     status: 404
-                })
+                });
             }
         }
         const isDataValid = ticketSchema.safeParse({title , body});

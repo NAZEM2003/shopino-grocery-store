@@ -7,7 +7,7 @@ const CommetnBox = ({ comment }) => {
         <div className='border border-zinc-400 rounded-lg p-3 my-6 w-full min-w-64 max-w-md lg:max-w-lg'>
             <div className='p-2 flex item'>
                 <div className='w-16 h-16 relative'>
-                    <Image className='rounded-full' fill src={comment.userID.img} alt='profile' />
+                    <Image className='rounded-full' fill src={decodeURIComponent(comment.userID.img)} alt='profile' />
                 </div>
                 <div className='ml-4 sm:ml-10'>
                     <h2 className='mb-4 text-lg text-zinc-900 font-semibold'>{comment.name}</h2>

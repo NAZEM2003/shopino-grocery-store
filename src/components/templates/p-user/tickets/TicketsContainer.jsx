@@ -1,19 +1,28 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import TicketBox from './TicketBox';
+import Swal from 'sweetalert2';
 
 
 const TicketsContainer = () => {
     const [tickets, setTickets] = useState([]);
-
     useEffect(() => {
         const fetchTickets = async () => {
-            const res = await fetch("/api/tickets",{next:{tags:['fetchTickets']}});
-            const responseData = await res.json();
-            setTickets(responseData);
+            const res = await fetch("/api/tickets", { next: { tags: ['fetchTickets'] } });
+            if (res.ok) {
+                const responseData = await res.json();
+                setTickets(responseData);
+            } else {
+                Swal.fire({
+                    title:"Error",
+                    text:"Something went wrong , Please try again later.",
+                    icon:"error"
+                });
+            }
         };
         fetchTickets();
-    }, []);  
+    }, []);
+
     return (
         <div>
             <form className='mt-8 flex flex-wrap' action="">
@@ -35,8 +44,8 @@ const TicketsContainer = () => {
             <section className='mt-14'>
                 {
                     tickets.length ?
-                    tickets.map((ticket)=> <TicketBox key={ticket._id} id={ticket._id} title={ticket.title} department={ticket.department.title} hasAnswer={ticket.hasAnswer} createdAt={ticket.createdAt}/>)
-                    : <h1 className='text-center text-4xl font-semibold text-zinc-800 mt-28'>There is no Ticket</h1>
+                        tickets.map((ticket) => <TicketBox key={ticket._id} id={ticket._id} title={ticket.title} department={ticket.department.title} hasAnswer={ticket.hasAnswer} createdAt={ticket.createdAt} />)
+                        : <h1 className='text-center text-4xl font-semibold text-zinc-800 mt-28'>There is no Ticket</h1>
                 }
             </section>
         </div>

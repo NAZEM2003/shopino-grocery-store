@@ -1,12 +1,12 @@
 "use client"
-import { authUser , getUserWish} from '@/utils/actions';
+import { authUser, getUserWish } from '@/utils/actions';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import Swal from 'sweetalert2';
 
-const AddToWishlist = ({productID}) => {
+const AddToWishlist = ({ productID }) => {
     const router = useRouter();
     const [isInWishlist, setIsInWishlist] = useState(false);
 
@@ -79,12 +79,10 @@ const AddToWishlist = ({productID}) => {
             }).then((response) => {
                 if (response.value) {
                     router.push(`/login-register/?method=${loginRegisterMethods.signin}`);
-                    return false
                 }
-                return false
-
+                return
             });
-            return false;
+            return 
         }
         const data = {
             user: user._id,

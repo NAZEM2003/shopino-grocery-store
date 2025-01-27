@@ -7,18 +7,19 @@ import { IoMenu, IoClose } from "react-icons/io5";
 import Sidebar from './Sidebar';
 import { FcSearch } from 'react-icons/fc';
 
-const Topbar = ({ user }) => {
+const Topbar = ({user}) => {
     const [isSidebarShown, setIsSidebarShown] = useState(false);
+
     return (
         <div className='z-10  px-3 sm:p-2 border-b border-zinc-400 bg-slate-200 flex items-center justify-between fixed w-full shadow shadow-zinc-400'>
 
             <div className='items-center hidden sm:flex'>
                 <div className='w-16 h-16 relative rounded-full overflow-hidden'>
-                    <Image src={user.img} alt='logo' sizes='' fill />
+                    <Image src={decodeURIComponent(user?.img)} alt='logo' sizes='' fill />
                 </div>
                 <div className='ml-5 '>
-                    <h2 title={user.name} className='text-xl cursor-pointer text-zinc-800 font-semibold'>{user.name}</h2>
-                    <p className='mt-1 text-sm text-zinc-700'>{user.role}</p>
+                    <h2 title={user?.name} className='text-xl cursor-pointer text-zinc-800 font-semibold'>{user?.name}</h2>
+                    <p className='mt-1 text-sm text-zinc-700'>{user?.role}</p>
                 </div>
             </div>
             <Link href="/" className='inline-block z-20 relative w-24 h-16 overflow-hidden rounded-lg lg:w-32'>

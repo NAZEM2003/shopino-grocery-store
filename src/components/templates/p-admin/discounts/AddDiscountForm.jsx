@@ -1,5 +1,8 @@
 import SubmitBtn from '@/components/modules/buttons/SubmitBtn';
+import { loginRegisterMethods } from '@/utils/constants';
+
 import { discountSchema } from '@/utils/zod';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -7,6 +10,7 @@ const AddDiscountForm = ({ fetchDiscounts }) => {
     const [code, setCode] = useState("");
     const [percent, setPercent] = useState();
     const [maxUse, setMaxUse] = useState();
+    const router = useRouter();
 
     const addNewDiscount = async () => {
         const data = { code, percent: Number(percent), maxUse: Number(maxUse) };
@@ -21,8 +25,8 @@ const AddDiscountForm = ({ fetchDiscounts }) => {
         }
         const res = await fetch("/api/discount", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+            headers:{
+                "Content-Type":"application/json"
             },
             body: JSON.stringify(data)
         });
@@ -36,6 +40,14 @@ const AddDiscountForm = ({ fetchDiscounts }) => {
             setMaxUse("");
             setPercent("");
             fetchDiscounts();
+            return
+        } else if (res.status === 403) {
+            Swal.fire({
+                title: "Operation Failed",
+                text: "Your Token has expired , Please log in again",
+                icon: "error"
+            });
+            router.replace(`/login-register?method=${loginRegisterMethods.signin}`);
             return
         } else if (res.status === 500) {
             Swal.fire({
@@ -54,7 +66,7 @@ const AddDiscountForm = ({ fetchDiscounts }) => {
             return
         }
     }
-    
+
 
     return (
         <form action={addNewDiscount} className='flex flex-col p-2 mt-10 mx-auto max-w-lg border border-zinc-400 rounded-lg shadow-lg shadow-zinc-600'>

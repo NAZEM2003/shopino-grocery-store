@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+1-Description
 
-## Getting Started
+This project is an online grocery sales website that includes features such as: add to cart, add to wishlist, order management, admin panel for managing products and users, sending tickets, etc. This project is developed using Next.js (version 14) and mongoDB.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2-Project Structure
+/
+|-- src/            
+|    |-- app/               # main directory for next.js files
+|    |   |- about/          # about us page 
+|    |   |- api/            # API routes
+|    |   |- cart/           # cart page
+|    |   .
+|    |   .
+|    |   .
+|    |
+|    |-- components/        # reUsable components
+|    |-- styles/            # Styles (css file) + tailwindcss
+|    |__ utils/             # helper functions
+|
+|-- public/                 # Public files (static & uploaded images & ...)
+|-- models/                 # Database Collections models
+|-- config/                 # Database connection configs
+|-- .env                    # Environment Variables
+|-- jsonconfig.json         # Project Configs
+|-- next.config.mjs         # next.js configs
+|-- tailwind.config.js      # tailwindcss configs
+|__ README.md               # Project descriptions 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3-Features
+    Users:
+        1- view Product list and Details of each Product
+        2- Add products to Cart
+        3- Save favorite Products
+        4- Send a Ticket
+        5- Post Comment for Products
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    Admins:
+        1- Products Management (add , edit , delete)
+        2- view and Manage user orders
+        3- Users Management
+        4- Reply to Tickets
+        5- Add Discount Code & Category
+        6- Approve or reject Comments submitted by users
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+4-technologies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    FrontEnd : Next.js (version 14) , Tailwind Css , React
+    BackEnd : Next.js server actions , API routes
+    Database : MongoDB
+    Authentication : JWT (admin & users)
+    data validation : zod
+    Slider : Swiper
+    Display Messages : sweetalert2
+    Charts : recharts
+    icons : react-icons
+    Database Connection : mongoose
+    Password hashing : bcryptjs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5-Demo
+    site Demo : http://shopinogrocerystore.ir/

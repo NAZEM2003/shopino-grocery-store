@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const AddToCart = ({ id, name, price, img }) => {
+const AddToCart = ({ id, name, price, img, isExist }) => {
     const [quantity, setQuantity] = useState(1);
+    
     const decreaseHandler = () => {
         if (quantity <= 1) {
             return false
@@ -16,21 +17,39 @@ const AddToCart = ({ id, name, price, img }) => {
 
 
     const addToCart = async () => {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        if (cart.length) {
-            const isIsCart = cart.some(item => item.id === id);
-            if (isIsCart) {
-                cart.forEach(item => {
-                    if (item.id === id) {
-                        item.count = item.count + quantity
-                        localStorage.setItem("cart", JSON.stringify(cart));
-                        Swal.fire({
-                            title: "Done",
-                            text: `${item.name} successfully added to your Cart`,
-                            icon: "success"
-                        });
-                    }
-                });
+        if (isExist) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (cart.length) {
+                const isIsCart = cart.some(item => item.id === id);
+                if (isIsCart) {
+                    cart.forEach(item => {
+                        if (item.id === id) {
+                            item.count = item.count + quantity
+                            localStorage.setItem("cart", JSON.stringify(cart));
+                            Swal.fire({
+                                title: "Done",
+                                text: `${item.name} successfully added to your Cart`,
+                                icon: "success"
+                            });
+                        }
+                    });
+                } else {
+                    const cartItem = {
+                        id,
+                        name,
+                        price,
+                        img,
+                        count: quantity
+                    };
+                    cart.push(cartItem);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    Swal.fire({
+                        title: "Done",
+                        text: `${cartItem.name} successfully added to your Cart`,
+                        icon: "success"
+                    });
+                }
+
             } else {
                 const cartItem = {
                     id,
@@ -47,22 +66,6 @@ const AddToCart = ({ id, name, price, img }) => {
                     icon: "success"
                 });
             }
-
-        } else {
-            const cartItem = {
-                id,
-                name,
-                price,
-                img,
-                count: quantity
-            };
-            cart.push(cartItem);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            Swal.fire({
-                title: "Done",
-                text: `${cartItem.name} successfully added to your Cart`,
-                icon: "success"
-            });
         }
     }
 
@@ -73,7 +76,11 @@ const AddToCart = ({ id, name, price, img }) => {
                 <span className='w-12 text-center overflow-hidden'>{quantity}</span>
                 <button className='border-zinc-400 border-l w-10 transition-all hover:text-custom-dark-blue' onClick={increaseHandler}>+</button>
             </div>
-            <button onClick={addToCart} className='p-3 rounded-md bg-custom-dark-blue border border-custom-dark-blue text-slate-200 ml-4 font-semibold transition-all hover:bg-slate-200 hover:text-custom-dark-blue'>Add to Cart</button>
+            <button
+                disabled={!isExist}
+                onClick={addToCart}
+                className={`p-3 rounded-md ${isExist ? "bg-custom-dark-blue border-custom-dark-blue hover:bg-slate-200 hover:text-custom-dark-blue" : " bg-zinc-500"}  border text-slate-200 ml-4 font-semibold transition-all `}
+            >Add to Cart</button>
         </div>
     );
 }

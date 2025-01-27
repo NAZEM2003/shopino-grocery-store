@@ -27,8 +27,8 @@ export const POST = async (req) => {
             productID,
             isAccepted: false
         });
+
         const comments = await Comment.find({ productID });
-        console.log(comments);
 
         await Product.findOneAndUpdate({ _id: productID }, {
             $push: {
@@ -40,7 +40,6 @@ export const POST = async (req) => {
                 comments: comment._id
             }
         });
-
 
         return Response.json({ message: "comment added successfully" }, {
             status: 201

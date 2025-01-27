@@ -4,6 +4,7 @@ import Product from "@/models/Product";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { authAdmin } from "@/utils/actions";
+import mongoose from "mongoose";
 
 export const POST = async (req) => {
     try {
@@ -11,7 +12,6 @@ export const POST = async (req) => {
         const formData = await req.formData();
         const name = formData.get("name");
         const price = Number(formData.get("price"));
-        const score = Number(formData.get("score"));
         const img = formData.get("img");
         const quantity = formData.get("quantity");
         const description = formData.get("description");
@@ -29,7 +29,7 @@ export const POST = async (req) => {
             });
         }
 
-        const isDataValid = productSchema.safeParse({ name, price, score, quantity, description });
+        const isDataValid = productSchema.safeParse({ name, price, quantity, description, category });
         if (!isDataValid.success) {
             return Response.json({ message: isDataValid.error.issues[0].message }, {
                 status: 422
@@ -50,12 +50,11 @@ export const POST = async (req) => {
         await Product.create({
             name,
             price,
-            score,
             quantity,
             category,
             description,
             isExist: true,
-            img: `http://localhost:3000/uploads/products/${imgName}`
+            img: `/uploads/products/${imgName}`
         });
 
 
@@ -76,6 +75,31 @@ export const GET = async () => {
         connectToDB();
         const products = await Product.find({}, "-__v").populate("comments category");
         return Response.json(products);
+    } catch (error) {
+        return Response.json({ message: error.message }, {
+            status: 500
+        });
+    }
+}
+
+export const DELETE = async (req) => {
+    try {
+        const { productID } = await req.json();
+        connectToDB();
+        const admin = authAdmin();
+        if (!admin) {
+            return Response.json({ message: "access denied" }, {
+                status: 403
+            });
+        };
+        const isProductIDValid = mongoose.Types.ObjectId.isValid(productID);
+        if (!isProductIDValid) {
+            return Response.json({ message: "the product id is not valid" }, {
+                status: 400
+            })
+        }
+        await Product.findOneAndDelete({ _id: productID });
+        return Response.json({ message: "the product was successfully deleted" });
     } catch (error) {
         return Response.json({ message: error.message }, {
             status: 500

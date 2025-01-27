@@ -1,5 +1,6 @@
 "use client"
 import { getAllComments } from '@/utils/actions';
+
 import { emailSchema } from '@/utils/zod';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
@@ -34,8 +35,8 @@ const CommentsTable = () => {
             if (result.isConfirmed) {
                 const res = await fetch("/api/comments/accept", {
                     method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ commentID })
                 });
@@ -80,15 +81,15 @@ const CommentsTable = () => {
             if (result.isConfirmed) {
                 const res = await fetch("/api/comments/reject", {
                     method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ commentID })
                 });
                 if (res.ok) {
                     Swal.fire({
                         title: "Done",
-                        text: "the Comment was successfully accepted",
+                        text: "the Comment was successfully Rejected",
                         icon: "success"
                     });
                     fetchComments();
@@ -101,7 +102,7 @@ const CommentsTable = () => {
                     });
                     return
                 } else {
-                    const resData = await req.json();
+                    const resData = await res.json();
                     Swal.fire({
                         title: "Operation Failed",
                         text: resData.message,
@@ -135,8 +136,8 @@ const CommentsTable = () => {
                 }
                 const res = await fetch("/api/user/ban", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ email })
                 });
@@ -180,16 +181,16 @@ const CommentsTable = () => {
             if (result.isConfirmed) {
                 const res = await fetch("/api/comments", {
                     method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ commentID })
                 });
                 if (res.ok) {
                     Swal.fire({
-                        title:"Done",
-                        text:"the Comment was Successfully Deleted",
-                        icon:"success"
+                        title: "Done",
+                        text: "the Comment was Successfully Deleted",
+                        icon: "success"
                     })
                     fetchComments();
                     return

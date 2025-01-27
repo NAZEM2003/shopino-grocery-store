@@ -12,7 +12,7 @@ const Signin = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const signin = async () => {
+    const signinHandler = async () => {
         const userData = {
             email,
             password
@@ -28,7 +28,7 @@ const Signin = () => {
             })
             return false;
         }
-        const res = await fetch("http://localhost:3000/api/auth/signin", {
+        const res = await fetch(`/api/auth/signin`, {
             method: "POST",
             headers: {
                 "Content-Type": "Application/json"
@@ -45,10 +45,10 @@ const Signin = () => {
                 text: "you have successfully Signed In",
                 confirmButtonText: "Ok",
                 confirmButtonColor: "#499"
-            }).then(()=>{
+            }).then(() => {
                 router.replace("/");
             })
-        } else{
+        } else {
             Swal.fire({
                 title: "Sign in failed",
                 icon: "error",
@@ -61,12 +61,12 @@ const Signin = () => {
     }
 
     return (
-        <form action={signin} className='w-64 sm:w-80 flex flex-col items-center bg-slate-200 text-zinc-800 mx-auto  mt-20 sm:ml-32 rounded-md px-4'>
-            <h2 className='my-5 text-2xl font-semibold'>Sign in</h2>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} className='my-5 p-2 outline-none rounded shadow-md shadow-zinc-400 w-full' type="email" placeholder='Email...' />
-            <input value={password} onChange={(e) => setPassword(e.target.value)} className='my-5 p-2 outline-none rounded shadow-md shadow-zinc-400 w-full' type="password" placeholder='password...' />
+        <form action={signinHandler} className='w-64 sm:w-80 flex flex-col items-center backdrop-blur-md bg-slate-200 bg-opacity-15 text-zinc-800 mt-8 rounded-md px-4'>
+            <h2 className='my-5 text-2xl text-slate-200 font-semibold'>Sign in</h2>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} className='my-5 p-2 text-lg font-medium outline-none rounded w-full' type="email" placeholder='Email...' />
+            <input value={password} onChange={(e) => setPassword(e.target.value)} className='my-5 p-2 text-lg font-medium outline-none rounded w-full' type="password" placeholder='password...' />
             <SubmitBtn text="Sign In" />
-            <p className='my-7 text-zinc-700'>Have no Account? <Link className='text-custom-dark-blue' href={`/login-register/?method=${loginRegisterMethods.signup}`}>Sign Up</Link></p>
+            <p className='my-7 text-slate-100'>Have no Account? <Link className='text-custom-light-blue' href={`/login-register/?method=${loginRegisterMethods.signup}`}>Sign Up</Link></p>
         </form>
     );
 }

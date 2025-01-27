@@ -1,11 +1,15 @@
 "use client"
 import { getAllTickets } from '@/utils/actions';
+import { loginRegisterMethods } from '@/utils/constants';
 import { emailSchema, ticketAnswerSchema } from '@/utils/zod';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 const TicketsTable = () => {
     const [tickets, setTickets] = useState([]);
+
+    const router = useRouter();
 
     const fetchTickets = async () => {
         const Alltickets = await getAllTickets();
@@ -49,8 +53,8 @@ const TicketsTable = () => {
                 };
                 const res = await fetch("/api/tickets/answer", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/jso"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify(data)
                 });
@@ -62,7 +66,16 @@ const TicketsTable = () => {
                     });
                     fetchTickets();
                     return
-                } else if (res.status === 500) {
+                } else if (res.status === 403) {
+                    Swal.fire({
+                        title: "Operation Failed",
+                        text: "Your Token has expired , Please log in again",
+                        icon: "error"
+                    });
+                    router.replace(`/login-register?method=${loginRegisterMethods.signin}`);
+                    return
+                }
+                else if (res.status === 500) {
                     Swal.fire({
                         title: "Operation Failed",
                         text: "somthing went wrong. Please try again later.",
@@ -104,8 +117,8 @@ const TicketsTable = () => {
                 }
                 const res = await fetch("/api/user/ban", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ email })
                 });
@@ -115,6 +128,14 @@ const TicketsTable = () => {
                         text: "the user was successfully banned",
                         icon: "success"
                     });
+                    return
+                } else if (res.status === 403) {
+                    Swal.fire({
+                        title: "Operation Failed",
+                        text: "Your Token has expired , Please log in again",
+                        icon: "error"
+                    });
+                    router.replace(`/login-register?method=${loginRegisterMethods.signin}`);
                     return
                 } else if (res.status === 500) {
                     Swal.fire({

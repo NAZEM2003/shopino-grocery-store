@@ -44,8 +44,8 @@ const ChangePasswordForm = () => {
         const data = { currentPassword, newPassword, repeatPassword };
         const res = await fetch("/api/user/password", {
             method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
+            headers:{
+                "Content-Type":"application/json"
             },
             body: JSON.stringify(data)
         });

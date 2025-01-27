@@ -7,7 +7,7 @@ const TicketDetails = ({ user, isAnswer , createdAt, body }) => {
             <div className='flex justify-between'>
                 <div className='flex items-center'>
                     <div className='w-16 h-16 relative rounded-full overflow-hidden'>
-                        <Image src={user.img} alt='logo' sizes='' fill />
+                        <Image src={decodeURIComponent(user.img)} alt='profile' sizes='' fill />
                     </div>
                     <div className='ml-5'>
                         <h1 className={`text-xl font-semibold ${isAnswer ? "text-slate-200":"text-zinc-800"} mb-2`}>{user.name}</h1>

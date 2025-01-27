@@ -3,29 +3,29 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FcSearch } from "react-icons/fc";
-import { IoLogOutOutline } from "react-icons/io5";
+
 import { FcPaid, FcAnswers, FcComments, FcLike, FcDocument, FcDownLeft } from 'react-icons/fc';
 import styles from "@/styles/p-user/sidebar/style.module.css";
 import LogoutBtn from '../buttons/LogoutBtn';
 
 
-const Sidebar = ({ isShown, user }) => {
-  
+const Sidebar = ({ isShown , user}) => {
+    
     return (
         <nav className={`${styles.sidebar_container} ${isShown ? "right-3" : "-right-96"} shadow shadow-zinc-500 lg:h-screen bg-slate-200 `}>
 
 
             <h2 className='w-full text-lg hidden sm:inline-block text-center border-b border-b-zinc-300 p-2 mt-5 mx-auto text-zinc-800 font-semibold'>
-                Welcome Dear <span>{user.name}</span>
+                Welcome Dear <span>{user?.name}</span>
             </h2>
 
             <div className='flex items-center w-full sm:hidden'>
                 <div className='w-16 h-16 relative rounded-full overflow-hidden'>
-                    <Image src={user.img} alt='logo' fill />
+                    <Image src={decodeURIComponent(user?.img)} alt='logo' fill />
                 </div>
                 <div className='ml-5 '>
-                    <h2 title={user.name} className='text-xl cursor-pointer text-zinc-800 font-semibold'>{user.name.length > 16 ? `${user.name.slice(0, 10)} ...` : user.name}</h2>
-                    <p className='mt-1 text-sm text-zinc-700'>{user.role}</p>
+                    <h2 title={user?.name} className='text-xl cursor-pointer text-zinc-800 font-semibold'>{user.name?.length > 16 ? `${user.name?.slice(0, 10)} ...` : user?.name}</h2>
+                    <p className='mt-1 text-sm text-zinc-700'>{user?.role}</p>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@ const Sidebar = ({ isShown, user }) => {
                 <li><Link className='hover:text-custom-light-blue' href="/p-user/wishlist">Wishlist <FcLike className='ml-2' /></Link></li>
                 <li><Link className='hover:text-custom-light-blue' href="/p-user/account-details">Account Details <FcDocument className='ml-2' /></Link></li>
             </ul>
-          <LogoutBtn/>
+            <LogoutBtn />
         </nav>
     );
 }

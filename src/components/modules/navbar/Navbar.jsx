@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 //icon start
 import { FaAngleDown } from "react-icons/fa6";
-import { IoMenu, IoClose, IoLogOutOutline } from "react-icons/io5";
+import { IoMenu, IoClose } from "react-icons/io5";
 import { FcPaid, FcLike, FcHome, FcShop, FcWikipedia, FcVoicePresentation, FcAbout, FcRules, FcViewDetails, FcAnswers, FcComments, FcBusinessman, FcDocument } from "react-icons/fc";
 import { FaSignInAlt } from "react-icons/fa";
 //icon end
@@ -13,63 +13,24 @@ import logo from "@/images/logo.svg";
 import Sidebar from '@/templates/navbar/Sidebar';
 import { loginRegisterMethods, role } from '@/utils/constants';
 import { authUser, getUserWishlist } from '@/utils/actions';
-import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
 import LogoutBtn from '../buttons/LogoutBtn';
 
 const Navbar = () => {
     const [isLogin, setIsLogin] = useState(false);
     const [isSidebarShown, setIsSidebarShown] = useState(false);
-    const [wishesCount, setWishesCount] = useState(0);
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
     const sidebarToggle = () => {
         setIsSidebarShown(prevState => !prevState);
     }
-    const router = useRouter();
     useEffect(() => {
         const fetchUser = async () => {
             const userData = await authUser();
-
-            if (userData) {
-                const wishlist = await getUserWishlist(userData._id);
-                setWishesCount(wishlist.length);
-                setUser(userData)
-            }
+            setUser(userData);
             setIsLogin(!!userData);
         }
         fetchUser();
     }, []);
 
-    const logoutHandler = async () => {
-        Swal.fire({
-            title: "Attention",
-            icon: "warning",
-            text: "are You sure You want to Log Out of Your Account?",
-            showCancelButton: true,
-            cancelButtonText: "NO",
-            confirmButtonText: "YES",
-            confirmButtonColor: "#a55",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await fetch("/api/auth/signout", {
-                    method: "POST"
-                });
-                if (res.status === 200) {
-                    router.replace(`/login-register?method=${loginRegisterMethods.signin}`);
-                }
-                else {
-                    Swal.fire({
-                        title: "Operation Failed",
-                        icon: "error",
-                        text: "Somthing went wrong.Please try again later!",
-                        confirmButtonText: "OK",
-                        confirmButtonColor: "#333",
-                    });
-                    return
-                }
-            }
-        })
-    }
 
     return (
         <div className='w-full fixed top-0 left-0 z-10 bg-slate-200 flex items-center justify-between px-3 shadow-md shadow-zinc-400'>
@@ -127,9 +88,9 @@ const Navbar = () => {
             </nav>
 
             <div className='flex items-center'>
-                <Link className='relative text-3xl mx-5 transition-all' href="/p-user/wishlist"><FcLike /> <span className='flex items-center justify-center text-slate-200 text-sm font-bold rounded-full absolute bg-slate-700 -right-3 -top-3 w-6 h-6'>{wishesCount > 9 ? "+9" : wishesCount}</span></Link>
+                <Link className='relative text-3xl mx-5 transition-all' href="/p-user/wishlist"><FcLike /></Link>
 
-                <Link className='relative text-3xl mx-5 transition-all' href="/cart"><FcPaid /><span className='flex items-center justify-center text-slate-200 text-sm font-bold rounded-full absolute bg-slate-700 -right-3 -top-3 w-6 h-6'>+9</span></Link>
+                <Link className='relative text-3xl mx-5 transition-all' href="/cart"><FcPaid /></Link>
 
                 <div className='inline-block lg:hidden'>
                     <button className='text-4xl' onClick={sidebarToggle}>

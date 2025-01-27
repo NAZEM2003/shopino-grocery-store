@@ -21,12 +21,13 @@ export async function POST(req) {
                 status: 400
             })
         }
-        await Ban.create({ email });
+        const isAlreadyBanned = await Ban.findOne({ email }).lean();
+        if (!isAlreadyBanned) {
+            await Ban.create({ email });
+        }
         return Response.json({ message: "the user was successfully banned" }, { status: 201 });
 
     } catch (error) {
-        console.log(error);
-
         return Response.json({ message: error.message }, {
             status: 500
         })

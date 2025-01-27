@@ -1,6 +1,6 @@
 'use client'
+import { loginRegisterMethods } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
-import { Router } from 'next/router';
 import React from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import Swal from 'sweetalert2';
@@ -22,7 +22,7 @@ const LogoutBtn = () => {
                     method: "POST"
                 });
                 if (res.status === 200) {
-                    router.replace("/");
+                    router.replace(`/login-register?method=${loginRegisterMethods.signin}`);
                 }
                 else {
                     Swal.fire({

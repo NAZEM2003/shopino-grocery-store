@@ -1,6 +1,8 @@
 "use client"
 import SubmitBtn from '@/components/modules/buttons/SubmitBtn';
+import { loginRegisterMethods } from '@/utils/constants';
 import { ticketSchema } from '@/utils/zod';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -9,10 +11,10 @@ const SendTicketForm = () => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [department, setDepartment] = useState("");
-
+    const router = useRouter();
     useEffect(() => {
         const fetchDepartments = async () => {
-            const res = await fetch("/api/departments", { next: { revalidate: 3600 * 24 } });
+            const res = await fetch("/api/departments", { next: { tags:["departmentsFetch"] } });
             if (res.ok) {
                 const departments = await res.json();
                 setDepartments(departments.data);
@@ -49,10 +51,10 @@ const SendTicketForm = () => {
             return
         }
         const data = { title, body, department };
-        const res = await fetch("/api/tickets", {
+        const res = await fetch("/tickets", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+            headers:{
+                "Content-Type":"application/json"
             },
             body: JSON.stringify(data)
         });
@@ -72,7 +74,9 @@ const SendTicketForm = () => {
                 icon: "error",
                 text: "Your Token has expired. Please login again.",
                 confirmButtonColor: "#8a8"
-            });
+            }).then(()=>{
+                router.push(`/login-register?method=${loginRegisterMethods.signin}`);
+            })
             return
         } else if (res.status === 404) {
             Swal.fire({
@@ -91,7 +95,7 @@ const SendTicketForm = () => {
                 confirmButtonColor: "#8a8"
             });
             return
-        }else{
+        } else {
             Swal.fire({
                 title: "Operation Failed",
                 icon: "error",

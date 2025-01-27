@@ -17,6 +17,11 @@ export async function PATCH(req) {
         const name = formData.get("name");
         const email = formData.get("email");
         const img = formData.get("img");
+        if (!user) {
+            return Response.json({ message: "your token has expired" }, {
+                status: 401
+            })
+        }
         //data validation
         const isDataValid = updateUserSchema.safeParse({ name, email });
         if (!isDataValid.success) {
@@ -34,7 +39,7 @@ export async function PATCH(req) {
                 $set: {
                     name,
                     email,
-                    img: `http://localhost:3000/uploads/users/${imgName}`
+                    img: `/uploads/users/${imgName}`
                 }
             });
             const accessToken = generateAccessToken({ email });
@@ -92,7 +97,6 @@ export async function DELETE(req) {
         return Response.json({ message: "user successfully deleted" });
 
     } catch (error) {
-        console.log(error.message);
         return Response.json({ message: error.message }, {
             status: 500
         });

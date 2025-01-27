@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import ViewCommentBtn from './ViewCommentBtn';
+import Link from 'next/link';
 
 const CommentBox = ({ comment, index }) => {
     return (
@@ -10,9 +11,9 @@ const CommentBox = ({ comment, index }) => {
                 <p className='rounded-full w-10 h-10 border border-zinc-400 flex items-center justify-center text-lg font-semibold sm:mr-5'>
                     {index + 1}
                 </p>
-                <h2 className='my-4 text-lg font-semibold text-zinc-800'>
+                <Link href={`/product/${comment.productID._id}`} className='my-4 text-lg font-semibold text-zinc-800'>
                     {comment.productID.name}
-                </h2>
+                </Link>
             </div>
 
             <p className='text-lg font-semibold text-zinc-600 sm:mt-4'>

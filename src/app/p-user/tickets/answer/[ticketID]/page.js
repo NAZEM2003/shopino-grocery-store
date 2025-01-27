@@ -1,13 +1,11 @@
 import TicketDetails from '@/components/templates/p-user/tickets/answer/TicketDetails';
-import { getAnswerTicket, getQuestionTicket } from '@/utils/actions';
+import { getAnswerTickets, getQuestionTicket } from '@/utils/actions';
 import React from 'react';
 
 const Answer = async ({ params }) => {
     const ticketID = params.ticketID
     const questionTicket = await getQuestionTicket(ticketID);
-    const answerTicket = await getAnswerTicket(questionTicket._id);
-
-
+    const answerTickets = await getAnswerTickets(questionTicket._id);
     return (
         <main>
             <div className='flex flex-wrap items-center justify-between mt-5 border-b border-b-zinc-400'>
@@ -18,9 +16,9 @@ const Answer = async ({ params }) => {
             </div>
             <TicketDetails {...questionTicket} />
             {
-                answerTicket ? <TicketDetails {...answerTicket} /> : <h1 className='text-center mt-36 text-xl sm:text-3xl font-semibold text-zinc-800'>You have not received a Answer yet.</h1>
+                answerTickets.length ? answerTickets.map(answerTicket => <TicketDetails key={answerTicket._id} {...answerTicket} />)
+                    : <h1 className='text-center mt-36 text-xl sm:text-3xl font-semibold text-zinc-800'>You have not received a Answer yet.</h1>
             }
-
         </main>
     );
 }

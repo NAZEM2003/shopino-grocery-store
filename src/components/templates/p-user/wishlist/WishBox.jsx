@@ -1,15 +1,28 @@
 "use client"
 import { authUser } from '@/utils/actions';
+import { loginRegisterMethods } from '@/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from 'sweetalert2';
 
-const WishBox = ({ name, img, price, off, _id,revalidate }) => {
-
+const WishBox = ({ name, img, price, off, _id, getWishlist }) => {  
+    const router = useRouter();
     const removeFromWishlist = async () => {
         const user = await authUser();
+        if (!user) {
+            Swal.fire({
+                title: "Operation Failed",
+                icon: "error",
+                text: "Your Token has expired. Please login again.",
+                confirmButtonColor: "#8a8"
+            }).then(() => {
+                router.push(`/login-register?method=${loginRegisterMethods.signin}`);
+            })
+            return
+        }
         const data = {
             user: user._id,
             product: _id
@@ -29,7 +42,7 @@ const WishBox = ({ name, img, price, off, _id,revalidate }) => {
                 confirmButtonText: "Ok",
                 confirmButtonColor: "#353"
             });
-            revalidate();
+            getWishlist()
             return
         } else if (res.status === 400) {
             Swal.fire({
@@ -41,7 +54,7 @@ const WishBox = ({ name, img, price, off, _id,revalidate }) => {
             });
             return
         }
-        else {            
+        else {
             Swal.fire({
                 title: "Operation failed",
                 icon: "error",
@@ -57,12 +70,12 @@ const WishBox = ({ name, img, price, off, _id,revalidate }) => {
         <div className='w-64 h-96 flex flex-col items-center border border-zinc-400 rounded-lg m-3 relative p-2 mx-auto'>
             <div className='w-full h-3/6 flex items-center justify-center'>
                 <Link href={`/product/${_id}`}>
-                    <Image className='w-32 h-32' src={img} width={150} height={150} alt='product' />
+                    <Image className='w-32 h-32' src={decodeURIComponent(img)} width={150} height={150} alt='product' />
                 </Link>
             </div>
             <Link href={`/product/${_id}`} className='text-center flex items-center justify-center mt-3 font-semibold h-12'>
                 {
-                    name.length > 50 ? `${name.substring(0, 47)}...` : name
+                    name?.length > 50 ? `${name?.substring(0, 47)}...` : name
                 }
             </Link>
             <div className='text-center mt-4 h-14 flex flex-col items-center justify-center'>

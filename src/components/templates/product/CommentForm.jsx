@@ -16,7 +16,6 @@ const CommentForm = ({ productID }) => {
     const router = useRouter();
 
     const sendComment = async () => {
-
         const isDataValid = commentSchema.safeParse({ name, message, score });
         if (!isDataValid.success) {
             Swal.fire({
@@ -70,7 +69,10 @@ const CommentForm = ({ productID }) => {
                 text: "Your comment was sent successfully",
                 confirmButtonText: "Ok",
                 confirmButtonColor: "#499"
-            })
+            });
+            setScore(0);
+            setName('');
+            setMessage("");
             return
         } else if (res.status === 422) {
             const data = await res.json();

@@ -8,7 +8,8 @@ export async function POST(req) {
     try {
         connectToDB();
         const { code, percent, maxUse } = await req.json();
-        const admin = authAdmin();
+        const admin = await authAdmin();
+        
         if (!admin) {
             return Response.json({ message: "access denied" }, {
                 status: 403

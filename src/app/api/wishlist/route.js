@@ -65,7 +65,7 @@ export const GET = async () => {
                 status:401
             })
         }
-        const wishlist = await Wishlist.find({user:user._id});
+        const wishlist = await Wishlist.find({user:user._id}).populate("product").lean();
         return Response.json(wishlist);
     } catch (error) {
         return Response.json({ message: error.message }, {

@@ -7,6 +7,7 @@ import { getAllUsers } from '@/utils/actions';
 import Swal from 'sweetalert2';
 import { emailSchema } from '@/utils/zod';
 
+
 const UsersTable = ({ }) => {
     const [isModalShown, setIsModalShown] = useState(false);
     const [userID, setUserID] = useState("");
@@ -38,8 +39,8 @@ const UsersTable = ({ }) => {
                 const data = { userID: id }
                 const res = await fetch("/api/user/", {
                     method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify(data)
                 });
@@ -92,8 +93,8 @@ const UsersTable = ({ }) => {
                 }
                 const res = await fetch("/api/user/ban", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
+                    headers:{
+                        "Content-Type":"application/json"
                     },
                     body: JSON.stringify({ email })
                 });

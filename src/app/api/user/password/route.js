@@ -26,6 +26,11 @@ export async function PATCH(req) {
             })
         }
         const user = await authUser();
+        if (!user) {
+            return Response.json({ message: "user is not authenticated" }, {
+                status: 401
+            })
+        }
         const isPasswordCorrect = await verifyPassword(currentPassword, user.password);
         if (!isPasswordCorrect) {
             return Response.json({ message: "Current Password is incorrect" }, {

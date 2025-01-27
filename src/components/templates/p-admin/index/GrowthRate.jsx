@@ -57,8 +57,8 @@ const GrowthRate = () => {
                         <YAxis />
                         <Tooltip />
 
-                        <Line type="monotone" dataKey="current"stroke='#0891b2'/>
-                        <Line type="monotone" dataKey="prev" stroke='#ea580c'/>
+                        <Line type="monotone" dataKey="current" stroke='#0891b2' />
+                        <Line type="monotone" dataKey="prev" stroke='#ea580c' />
 
                     </LineChart>
                 </ResponsiveContainer>

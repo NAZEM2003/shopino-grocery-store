@@ -23,6 +23,10 @@ const schema = mongoose.Schema({
         required: false,
         default: ""
     },
+    refreshToken: {
+        type: String,
+        required: false,
+    },
     comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }],
     wishlist: [{ type: mongoose.Types.ObjectId, ref: "Wish" }],
     tickets: [{ type: mongoose.Types.ObjectId, ref: "Ticket" }],

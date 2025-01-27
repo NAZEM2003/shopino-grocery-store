@@ -1,5 +1,4 @@
 import Navbar from "@/components/modules/navbar/Navbar";
-import { FaSignInAlt } from "react-icons/fa";
 
 export const metadata = {
   title: "Shopino | Login-Register",

@@ -37,8 +37,6 @@ export async function PATCH(req) {
 
         return Response.json({ message: "comment successfully accepted" });
     } catch (error) {
-        console.log(error.message);
-
         return Response.json({ message: error.message }, {
             status: 500
         })

@@ -32,6 +32,7 @@ const Footer = () => {
                     <address className='mt-8'>
                         <p className='text-lg flex items-center my-3'>+989936920384 <FcCallback className='ml-2' /></p>
                         <p className='text-lg flex items-center my-3'>shopino.store@gmail.com <FcFeedback className='ml-2' /></p>
+                        <p className='text-lg flex items-center my-3'>shopino.info@gmail.com <FcFeedback className='ml-2' /></p>
                         <ul className='flex items-center justify-around mt-12 [&>*]:text-3xl'>
                             <li>
                                 <Link className='transition-all hover:text-sky-500' href="https://web.telegram.org"><FaTelegram /></Link>

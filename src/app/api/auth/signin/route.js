@@ -15,24 +15,25 @@ export async function POST(req) {
             });
         };
         const user = await User.findOne({ email: body.email });
-        if(!user){
-            return Response.json({message:"the password or email is incorrect"},{
-                status:422
+        if (!user) {
+            return Response.json({ message: "the password or email is incorrect" }, {
+                status: 422
             });
         }
-        const isPasswordCorrect = await verifyPassword(body.password , user.password);
-        if(!isPasswordCorrect){
-            return Response.json({message:"the password or email is incorrect"},{
-                status:422
+        const isPasswordCorrect = await verifyPassword(body.password, user.password);
+        if (!isPasswordCorrect) {
+            return Response.json({ message: "the password or email is incorrect" }, {
+                status: 422
             });
         };
         const accessToken = generateAccessToken({ email: body.email });
         const cookieStore = cookies();
-        cookieStore.set("token",accessToken,{
-            httpOnly:true,
-            path:"/"
-        })
-        return Response.json({message:"you have successfully signed in"});
+        cookieStore.set("token", accessToken, {
+            httpOnly: true,
+            path: "/"
+        });
+
+        return Response.json({ message: "you have successfully signed in" });
     } catch (error) {
         return Response.json({ message: error.message }, {
             status: 500

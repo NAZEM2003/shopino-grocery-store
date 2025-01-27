@@ -1,9 +1,9 @@
 import connectToDB from "@/config/db";
 import Category from "@/models/Category";
 import { authAdmin } from "@/utils/actions";
-import { role } from "@/utils/constants";
 import { categoryTitleSchema } from "@/utils/zod";
 import { writeFile } from "fs/promises";
+import { revalidateTag } from "next/cache";
 import path from "path";
 
 export const POST = async (req) => {
@@ -19,7 +19,6 @@ export const POST = async (req) => {
                 status: 403
             });
         }
-        //data validation
         const isTitleValid = categoryTitleSchema.safeParse(title);
         if (!isTitleValid.success) {
             return Response.json({ message: isTitleValid.error.issues[0].message }, {
@@ -31,7 +30,6 @@ export const POST = async (req) => {
                 status: 422
             });
         }
-
         const buffer = Buffer.from(await img.arrayBuffer());
         const imgName = Date.now() + img.name;
         const imgPath = path.join(process.cwd(), "/public/uploads/categories/" + imgName);
@@ -39,16 +37,28 @@ export const POST = async (req) => {
 
         await Category.create({
             title,
-            img: `http://localhost:3000/uploads/categories/${imgName}`
-        })
+            img: `/uploads/categories/${imgName}`
+        });
+        revalidateTag("fetchCategories");
         return Response.json({ message: "category added successfully" }, {
             status: 201
         });
-
 
     } catch (error) {
         return Response.json({ message: error.message }, {
             status: 500
         });
+    }
+}
+
+export const GET = async () => {
+    try {
+        connectToDB();
+        const categories = await Category.find({}).sort({ _id: -1 }).lean();
+        return Response.json(categories);
+    } catch (error) {
+        return Response.json({ message: error.message }, {
+            status: 500
+        })
     }
 }

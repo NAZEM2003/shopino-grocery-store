@@ -13,7 +13,7 @@ const Details = ({product}) => {
     return (
         <main className='mt-20 flex flex-col p-3 lg:flex-row'>
             <div className='h-72 relative flex items-center justify-center'>
-                <Image className='lg:mt-14' width={300} height={300} src={product.img} alt='product image' />
+                <Image className='lg:mt-14' width={300} height={300} src={decodeURIComponent(product.img)} alt='product image' />
             </div>
             <div className='mt-5 max-w-2xl sm:p-3 lg:mx-auto'>
                 <h1 className='text-2xl sm:text-3xl text-zinc-800 font-semibold'>{product.name}</h1>
@@ -37,7 +37,7 @@ const Details = ({product}) => {
                     }
                 </p>
 
-                <AddToCart id={product._id} name={product.name} price={product.price} img={product.img}/>
+                <AddToCart isExist={product.isExist} id={product._id} name={product.name} price={product.price} img={product.img}/>
                 <AddToWishlist productID={product._id}/>
                 <div className='border-y border-zinc-400'>
                     <p className='my-4 text-zinc-800'><span className='font-semibold'>Category</span> : {product.category.title}</p>
