@@ -2,40 +2,13 @@
 
 This project is an online grocery sales website that includes features such as: add to cart, add to wishlist, order management, admin panel for managing products and users, sending tickets, etc. This project is developed using Next.js (version 14) and mongoDB.
 
-
-2-Project Structure
-/
-|-- src/            
-|    |-- app/               # main directory for next.js files
-|    |   |- about/          # about us page 
-|    |   |- api/            # API routes
-|    |   |- cart/           # cart page
-|    |   .
-|    |   .
-|    |   .
-|    |
-|    |-- components/        # reUsable components
-|    |-- styles/            # Styles (css file) + tailwindcss
-|    |__ utils/             # helper functions
-|
-|-- public/                 # Public files (static & uploaded images & ...)
-|-- models/                 # Database Collections models
-|-- config/                 # Database connection configs
-|-- .env                    # Environment Variables
-|-- jsonconfig.json         # Project Configs
-|-- next.config.mjs         # next.js configs
-|-- tailwind.config.js      # tailwindcss configs
-|__ README.md               # Project descriptions 
-
-
-3-Features
+2-Features
     Users:
         1- view Product list and Details of each Product
         2- Add products to Cart
         3- Save favorite Products
         4- Send a Ticket
         5- Post Comment for Products
-
     Admins:
         1- Products Management (add , edit , delete)
         2- view and Manage user orders
@@ -45,8 +18,7 @@ This project is an online grocery sales website that includes features such as: 
         6- Approve or reject Comments submitted by users
 
 
-4-technologies
-
+3-technologies
     FrontEnd : Next.js (version 14) , Tailwind Css , React
     BackEnd : Next.js server actions , API routes
     Database : MongoDB
@@ -58,6 +30,13 @@ This project is an online grocery sales website that includes features such as: 
     icons : react-icons
     Database Connection : mongoose
     Password hashing : bcryptjs
+    
+4- project Images
+
+    ![Screenshot (57)](https://github.com/user-attachments/assets/6cab4b60-4434-4be4-9805-f6551f4d6d09)
+    ![Screenshot (58)](https://github.com/user-attachments/assets/7f21d334-7c8f-476a-8c40-43f9dec01fbb)
+    ![Screenshot (56)](https://github.com/user-attachments/assets/584fd8df-c8d8-48fd-8520-f8b4354384f4)
+
 
 5-Demo
     site Demo : http://shopinogrocerystore.ir/
